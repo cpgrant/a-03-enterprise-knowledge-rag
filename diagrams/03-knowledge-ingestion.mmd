@@ -1,0 +1,33 @@
+flowchart TB
+    A01["AI-A01 Git Repository"]
+    A02["AI-A02 Git Repository"]
+    Discovery["Tracked File Discovery"]
+    Validation["Path + File Validation"]
+    Parsing["Structure-Aware Parsing"]
+    Chunking["Document Chunking"]
+    Embedding["Local Embedding Model"]
+    Extraction["Verified Entity + Relation Extraction"]
+    VectorDB[("PostgreSQL pgvector")]
+    GraphDB[("Architecture Entity + Relation Tables")]
+    Provenance["Source + Git Provenance"]
+
+    A01 --> Discovery
+    A02 --> Discovery
+    Discovery --> Validation
+    Validation --> Parsing
+    Parsing --> Chunking
+
+    Chunking --> Embedding
+    Embedding --> VectorDB
+
+    Parsing --> Extraction
+    Extraction --> GraphDB
+
+    Discovery --> Provenance
+    Provenance --> VectorDB
+    Provenance --> GraphDB
+
+    classDef source fill:#dcebf8,color:#173b60,stroke:#8eb2d0
+    classDef process fill:#28679a,color:#fff,stroke:#17466d
+    class A01,A02 source
+    class Discovery,Validation,Parsing,Chunking,Embedding,Extraction process

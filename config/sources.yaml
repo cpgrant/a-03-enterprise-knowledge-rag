@@ -1,0 +1,51 @@
+version: 1
+
+sources:
+  - name: AI-A01
+    description: Enterprise AI Reference Architecture
+    repository_path: ../a-01-enterprise-ai-architecture
+    enabled: true
+    knowledge_domain: enterprise_architecture
+
+  - name: AI-A02
+    description: Agent Orchestration and A2A
+    repository_path: ../a-02-agent-orchestration-a2a
+    enabled: true
+    knowledge_domain: agent_architecture
+
+ingestion:
+  tracked_files_only: true
+  read_only: true
+
+  include_extensions:
+    - .md
+    - .py
+    - .mmd
+    - .yaml
+    - .yml
+    - .toml
+
+  exclude_directories:
+    - .git
+    - .venv
+    - __pycache__
+    - node_modules
+    - outputs
+    - results
+
+  exclude_patterns:
+    - ".env"
+    - ".env.*"
+    - "*secret*"
+    - "*credential*"
+
+chunking:
+  strategy: structure_aware
+  target_tokens: 500
+  overlap_tokens: 75
+
+provenance:
+  record_git_commit: true
+  record_file_path: true
+  record_content_hash: true
+  record_knowledge_layer: true

@@ -1,0 +1,32 @@
+flowchart TB
+    Query["Architecture Question"]
+    Planner["Query Classification"]
+    Vector["Vector Search"]
+    Keyword["Keyword Search"]
+    Graph["Knowledge Graph Traversal"]
+    Fusion["Reciprocal Rank Fusion"]
+    Evidence["Evidence Assembly + Source Validation"]
+    LLM["Local LLM"]
+    Answer["Grounded Answer + Citations"]
+    Abstain["Insufficient Evidence"]
+
+    Query --> Planner
+
+    Planner --> Vector
+    Planner --> Keyword
+    Planner --> Graph
+
+    Vector --> Fusion
+    Keyword --> Fusion
+    Graph --> Evidence
+    Fusion --> Evidence
+
+    Evidence -->|"Sufficient evidence"| LLM
+    Evidence -->|"Insufficient evidence"| Abstain
+
+    LLM --> Answer
+
+    classDef primary fill:#28679a,color:#fff,stroke:#17466d
+    classDef outcome fill:#237b7b,color:#fff,stroke:#145858
+    class Planner,Fusion,Evidence primary
+    class Answer,Abstain outcome

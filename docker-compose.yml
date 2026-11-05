@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: pgvector/pgvector:0.8.7-pg17
+    container_name: a03-postgres
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    environment:
+      PGDATA: /var/lib/postgresql/data
+
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5433}:5432"
+
+    volumes:
+      - a03_postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  a03_postgres_data:

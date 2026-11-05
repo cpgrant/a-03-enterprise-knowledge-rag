@@ -1,0 +1,32 @@
+flowchart TB
+    Client["User / Agent Client"]
+    API["FastAPI Knowledge API"]
+    Orchestrator["Retrieval Orchestrator"]
+    Vector["Vector Retrieval"]
+    Keyword["Keyword Retrieval"]
+    Graph["Graph Traversal"]
+    Generator["Grounded Answer Generator"]
+    DB[("PostgreSQL + pgvector")]
+    NX["NetworkX"]
+    Ollama["Ollama Local LLM"]
+
+    Client --> API
+    API --> Orchestrator
+
+    Orchestrator --> Vector
+    Orchestrator --> Keyword
+    Orchestrator --> Graph
+
+    Vector --> DB
+    Keyword --> DB
+    Graph --> NX
+    NX --> DB
+
+    Orchestrator --> Generator
+    Generator --> Ollama
+    Generator --> API
+
+    classDef service fill:#28679a,color:#fff,stroke:#17466d
+    classDef datastore fill:#dcebf8,color:#173b60,stroke:#8eb2d0
+    class API,Orchestrator,Generator service
+    class DB,NX,Ollama datastore

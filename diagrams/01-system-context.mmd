@@ -1,0 +1,20 @@
+flowchart TB
+    Architect["Enterprise Architect / Engineer"]
+    Agent["AI-A02 Agent"]
+    A01["AI-A01 Enterprise AI Architecture"]
+    A02["AI-A02 Agent Orchestration"]
+    A03["AI-A03 Enterprise Knowledge Intelligence"]
+
+    Architect -->|"Architecture questions"| A03
+    Agent -->|"Knowledge queries"| A03
+
+    A01 -->|"Architecture docs, code, ADRs"| A03
+    A02 -->|"Workflows, contracts, policies"| A03
+
+    A03 -->|"Evidence-grounded answers"| Architect
+    A03 -->|"Knowledge + citations"| Agent
+
+    classDef primary fill:#245f94,color:#fff,stroke:#154568
+    classDef source fill:#dcebf8,color:#173b60,stroke:#82a8c8
+    class A03 primary
+    class A01,A02 source
