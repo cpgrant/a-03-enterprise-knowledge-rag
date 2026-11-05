@@ -21,6 +21,7 @@ def hybrid_search(
     query: str,
     limit: int = 5,
     rrf_k: int = 60,
+    source: str | None = None,
 ) -> list[HybridResult]:
     if not query.strip():
         raise ValueError("Search query cannot be empty")
@@ -33,8 +34,8 @@ def hybrid_search(
 
     candidate_limit = 20
 
-    vector_results = vector_search(query, candidate_limit)
-    keyword_results = keyword_search(query, candidate_limit)
+    vector_results = vector_search(query, candidate_limit, source=source)
+    keyword_results = keyword_search(query, candidate_limit, source=source)
 
     combined = {}
 

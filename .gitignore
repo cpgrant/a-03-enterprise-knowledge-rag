@@ -26,3 +26,14 @@ Thumbs.db
 *.egg-info/
 build/
 dist/
+
+# AI-A03 local artifacts
+__pycache__/
+*.py[cod]
+*.py.bak
+.pytest_cache/
+.ruff_cache/
+evaluation/results/
+.env
+.env.*
+!.env.example

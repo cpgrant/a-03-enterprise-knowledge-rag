@@ -16,7 +16,11 @@ class KeywordResult:
     rank: float
 
 
-def keyword_search(query: str, limit: int = 5) -> list[KeywordResult]:
+def keyword_search(
+    query: str,
+    limit: int = 5,
+    source: str | None = None,
+) -> list[KeywordResult]:
     if not query.strip():
         raise ValueError("Search query cannot be empty")
 
@@ -69,12 +73,13 @@ def keyword_search(query: str, limit: int = 5) -> list[KeywordResult]:
         CROSS JOIN q
         WHERE to_tsvector('english', c.content)
               @@ q.query
+          AND (%s::text IS NULL OR s.name = %s::text)
         ORDER BY rank DESC, c.id
         LIMIT %s
     """
 
     with connect() as conn, conn.cursor() as cur:
-        cur.execute(sql, (search_query, limit))
+        cur.execute(sql, (search_query, source, source, limit))
         rows = cur.fetchall()
 
     return [

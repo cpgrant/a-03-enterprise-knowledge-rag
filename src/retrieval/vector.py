@@ -16,7 +16,11 @@ class SearchResult:
     distance: float
 
 
-def vector_search(query: str, limit: int = 5) -> list[SearchResult]:
+def vector_search(
+    query: str,
+    limit: int = 5,
+    source: str | None = None,
+) -> list[SearchResult]:
     if not query.strip():
         raise ValueError("Search query cannot be empty")
 
@@ -38,12 +42,13 @@ def vector_search(query: str, limit: int = 5) -> list[SearchResult]:
         JOIN documents d ON c.document_id = d.id
         JOIN knowledge_sources s ON d.source_id = s.id
         WHERE c.embedding IS NOT NULL
+          AND (%s::text IS NULL OR s.name = %s::text)
         ORDER BY c.embedding <=> %s::vector
         LIMIT %s
     """
 
     with connect() as conn, conn.cursor() as cur:
-        cur.execute(sql, (vector, vector, limit))
+        cur.execute(sql, (vector, source, source, vector, limit))
         rows = cur.fetchall()
 
     return [
