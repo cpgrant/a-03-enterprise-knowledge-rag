@@ -105,6 +105,7 @@ The local Ollama service, embedding and generation models, database migrations, 
 
 - [Architecture Specification](docs/AI-A03-Architecture-Specification.md)
 - [Architecture Decision Records](docs/adr/)
+- [From Exploration to Production — RTX 4090 Roadmap](docs/AI-A03-From-Exploration-to-Production.md)
 
 ## Limitations and Future Work
 
